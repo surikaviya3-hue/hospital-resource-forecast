@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Govt. Hospital Resource Forecasting</title>
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="nav-left">
+                <h2 class="logo">🏥 Govt. Hospital Resource System</h2>
+            </div>
+            <div class="nav-right">
+                <a href="#" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link">Prediction</a>
+                <a href="#" class="nav-link">History</a>
+                <a href="#" class="nav-link">Alerts</a>
+                <button id="themeToggle" class="theme-btn">🌙</button>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </nav>
+
+        <div class="main-content">
+            <!-- KPI Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-icon">👥</div>
+                    <div>
+                        <p class="kpi-label">TOTAL PATIENTS</p>
+                        <p class="kpi-value" id="totalPatients">1,248</p>
+                        <p class="trend positive">+12% from yesterday</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🛏️</div>
+                    <div>
+                        <p class="kpi-label">BEDS AVAILABLE</p>
+                        <p class="kpi-value" id="bedsAvailable">320</p>
+                        <p class="trend positive">+8% from yesterday</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🩺</div>
+                    <div>
+                        <p class="kpi-label">ICU OCCUPANCY</p>
+                        <p class="kpi-value" id="icuOccupancy">78%</p>
+                        <p class="trend positive">+5% from yesterday</p>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-icon">🧪</div>
+                    <div>
+                        <p class="kpi-label">OXYGEN LEVEL</p>
+                        <p class="kpi-value" id="oxygenLevel">62%</p>
+                        <p class="trend negative">-3% from yesterday</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <!-- Charts Section (Small) -->
+                <div class="charts-section">
+                    <div class="chart-card">
+                        <h3>Patient Trend (Last 7 Days)</h3>
+                        <canvas id="patientTrendChart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Resource Usage</h3>
+                        <canvas id="resourcePieChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Prediction Form -->
+                <div class="prediction-form">
+                    <h3>Make Prediction</h3>
+                    
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="predDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Expected Patients</label>
+                        <input type="number" id="patient_count" placeholder="Enter expected patients">
+                    </div>
+                    <div class="form-group">
+                        <label>Disease Type</label>
+                        <select id="disease_type">
+                            <option value="0">COVID</option>
+                            <option value="1">Dengue</option>
+                            <option value="2">Flu</option>
+                            <option value="3">Malaria</option>
+                            <option value="4">Typhoid</option>
+                            <option value="5">Pneumonia</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Season</label>
+                        <select id="season">
+                            <option value="0">Summer</option>
+                            <option value="1">Rainy</option>
+                            <option value="2">Winter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Occupancy Rate (%)</label>
+                        <input type="number" id="occupancy_rate" placeholder="e.g. 75" value="75">
+                    </div>
+                    <div class="form-group">
+                        <label>Available Beds</label>
+                        <input type="number" id="available_beds" placeholder="e.g. 200" value="200">
+                    </div>
+
+                    <button onclick="predictResources()" class="predict-btn">Predict Resources</button>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="results-section">
+                    <h3>Prediction Results</h3>
+                    <div class="results-grid">
+                        <div class="result-item"><strong>Beds Required:</strong> <span id="bedsResult">-</span></div>
+                        <div class="result-item"><strong>ICU Required:</strong> <span id="icuResult">-</span></div>
+                        <div class="result-item"><strong>Oxygen Required:</strong> <span id="oxygenResult">-</span></div>
+                        <div class="result-item"><strong>Doctors Required:</strong> <span id="doctorResult">-</span></div>
+                        <div class="result-item"><strong>Medicine Units:</strong> <span id="medicineResult">-</span></div>
+                        <div class="result-item emergency"><strong>Emergency Level:</strong> <span id="emergencyResult">-</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts -->
+            <div class="alerts-section">
+                <h3>Recent Alerts</h3>
+                <div class="alert warning">ICU occupancy is above 75% in General Ward <span class="time">10:30 AM</span></div>
+                <div class="alert danger">Oxygen level is below 65% <span class="time">09:45 AM</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../static/js/script.js"></script>
+</body>
+</html>
